@@ -1,0 +1,11 @@
+1.00 (January 2005) Initial version
+
+1.01 (07.05.05) Triplet reaction added.
+
+1.02 (19.05.05) Memory for matrices allocated row by row
+
+1.03 (07.08.05) Old and new memory allocation schemes merged
+
+1.04 (08.08.05) Separate calculation of S- and T recomb. prob.
+
+1.05 (05.03.07) Two bugs related to degeneracy caluculation fixed.

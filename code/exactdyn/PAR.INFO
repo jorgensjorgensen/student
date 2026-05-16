@@ -1,0 +1,128 @@
+* INPUT :                                                              *
+*   kmode      : parameter determining the type of the sink term       *
+*                                                                      *
+*                kmode = 1 => space dependent kappa(z) sink term       *
+*                             reflective boundary condition at x = 1   *
+*                                                                      *
+*                NB! when using this mode be careful to input right    *
+*                    values of alpha, beta and k_expo                  *
+*                k_expo = 6, beta = 0 => kappa(x) = alpha /(x^6)       *
+*                k_expo = 0           => kappa(x) = alpha*exp(-beta*x) *
+*                                                                      *
+*                kmode = 2 => delta-sink term (K = kappa*delta(x-1))   *
+*                             reflective boundary condition at x = 1   *
+*                                                                      *
+*                always using limiting behaviour of R(s,x)*g(x) at     *
+*                x -> infinity                                         *
+*                                                                      *
+*   gmode      : parameter determining the type of transformation      *
+*                                                                      *
+*                gmode = 1 => optimal transformation, g(x) = constant  *
+*                             The programme calculates the transfor-   *
+*                             mation between z and x for the selected  *
+*                             potential.                               *
+*                gmode = 2 => free diffusion transformation, z = 1/x   *
+*                             The programme calculates g(x) for the    *
+*                             selected potential.                      *
+*                gmode = 3 => the transformation, z = 1/sqrt(x)        *
+*                             The programme calculates g(x) for the    *
+*                             selected potential.                      *
+*                                                                      *
+*   vmode      : parameter determining the type of potential used      *
+*                                                                      *
+*                vmode = 1 => V(x) = 0                                 *
+*                vmode = 2 => V(x) = xc/x  (Coulomb potential)         *
+*                vmode = 3 => V(x) = xc*exp(-(x-1)/x_DSL)/x            *
+*                                      (screened Coulomb potential)    *
+*                vmode = 4 => V(x) =                                   *
+*                                (v0/2)*[tanh(inv_thick*(x-xmic)) - 1] *
+*                                      (potential modelling micelles)  *
+*                                                                      *
+*   dmode      : parameter determining the type of the relative        *
+*                diffusion constant, gamma(x) = D(x)/D                 *
+*                                                                      *
+*                dmode = 1 => gamma(x) = 1                             *
+*                dmode = 2 => gamma(x) = gam1 + (1/2)(gam1-1)*         *
+*                                       [tanh(inv_thick*(x-xmic)) - 1] *
+*                                                                      *
+*   xc         : the constant parameter in the Coulomb potential       *
+*   x_DSL      : Debye's screening length                              *
+*   xmic       : radius of micelle in units of d (distance of closest  *
+*                approach)                                             *
+*   inv_thick  : the inverse of the thickness (in units of d) of the   *
+*                layer between micelle and solution.                   *
+*   v0         : parameter used in potential expression when vmode = 4 *
+*   gam1       : gam1 = D_solution/D_micelle.                          *
+*                NOTE: for dmode = 2, D = D_micelle, where D is the    *
+*                diffusion const. used in the dimensionless variables. *
+*   k_recom    : the dimensionless constant in the sink-term           *
+*   ks         : dimensionless constant in expression for the          *
+*                scavenge term                                         *
+*                if vmode = 4                                          *
+*                 then  Ks(x) = ks*(1 - tanh(inv_thick*(x-xmic)) )/2   *
+*                 else  Ks(x) = ks                                     *
+*   alpha      : dimensionless constant in expression for kappa(x)     *
+*   beta       : dimensionless constant in expression for kappa(x)     *
+*   k_expo     : dimensionless constant in expression for kappa(x)     *
+*   nop        : number of discretisation points in z.                 *
+*                Note that nn >= 1/sqrt(qddD) to ensure an effective   *
+*                mixing of the spin states.                            *
+*   delta_g    : (g1-g2) the difference in g-factors                   *
+*                NOTE that the internal parameter qddD is given as:    *
+*                qddD = larmor-frequency-difference / 2                *
+*                     = delta_g * B02ddD / 4                           *
+*   B02ddD     : = (g1+g2)*beta_e*B0*d*d/(hbar*2*D) = 2*B0*d*d/D       *
+*   addD       : a*d*d/D, where a is the hyperfine constant.           *
+*   jzero      : J0*d*d/D                                              *
+*   alpha_d    : rex/d                                                 *
+*                The two last parameters are used in the expression    *
+*                for the exchange interaction, J(x)                    *
+*                J(x) = Jzero * exp( - alpha_d*(x-1) )                 *
+*   fs         : singlet character [0,1] used to set up rho(t=0)       *
+*                The programme always uses a spin density matrix       *
+*                of the form:                                          *
+*                rho(0) = rho(0)nucleus * rho(0)electrons              *
+*                rho(0)nucleus = 1/2|a><a| + 1/2|b><b|                 *
+*                rho(0)electrons = fs|S><S|                            *
+*                      + 1/3*(1-fs)( |To><To| + |T-><T-| + |T+><T+| )  *
+*                                                                      *
+*   sigma      : the dimensionless version of the parameter intro-     *
+*                duced by the Laplace transform.                       *
+*                                                                      *
+*   scanmode   : parameter determining which variable is varied        *
+*                = 1 : (x0_scan)      R(sigma,x0)  versus x0           *
+*                = 2 : (xc_scan)      R(sigma,x0)  versus xc           *
+*                = 3 : (v0_scan)      R(sigma,x0)  versus v0           *
+*                = 4 : (xmic_scan)    R(sigma,x0)  versus xmic         *
+*                = 5 : (jzero_scan)   R(sigma,x0)  versus J0           *
+*                = 6 : (delta_g_scan) R(sigma,x0)  versus delta_g      *
+*                = 7 : (k_recom_scan) R(sigma,x0)  versus k_recom      *
+*                = 8 : (ks_scan)      R(sigma,x0)  versus ks           *
+*                = 9 : (alpha_scan)   R(sigma,x0)  versus alpha_d      *
+*                = 10: (B02ddD_scan)  R(sigma,x0)  versus B02ddD       *
+*                = 11: (addD_scan)    R(sigma,x0)  versus addD         *
+*                = 12: (h_scan)       R(sigma,x0)  versus inv_thick    *
+*		 = 13: (sigma_scan)   R(sigma,x0)  versus sigma        *
+*                The programme can vary any of these variables either  *
+*                linearly or logarithmically.                          *
+*                Linear scan use :                                     *
+*                abs(scmin) < abs(scmax) if they have the same sign    *
+*                scmin < scmax           if they have opposite signs.  *
+*                Logarithmic scan:                                     *
+*                abs(scmin) < abs(scmax) and they MUST have same sign. *
+*   scmin      : minimum value of variable except for scanmode = 1     *
+*   scmax      : maximum value of variable except for scanmode = 1     *
+*   sclog      : parameter determining the form of the scan            *
+*                = 0  : var. varied linearly in step of scfac          *
+*                = 1  : var. varied logarithmically in steps of scfac  *
+*   scfac      : step size in scanning.                                *
+*   x0         : value of the initial separation                       *
+*                not used when scanmode = x0_scan                      *
+*   also_2n    : parameter determining if 2n-calculation is also done  *
+*                = 0 : only calculation with nop points                *
+*                = 1 : calculation for both nop and 2*nop points       *
+*                                                                      *
+*   ALL PARAMETERS MUST ALWAYS BE GIVEN TO THE PROGRAM                 *
+*   DESPITE THAT THEY ARE NOT ALL USED (unused values are arbitrary)   *
+***********************************************************************)
+

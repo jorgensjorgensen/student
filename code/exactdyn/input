@@ -1,0 +1,37 @@
+2		kmode
+2		gmode
+1		vmode
+1		dmode
+5.0		xc used in Coulomb potential
+2.0		Debye's screening length
+5.0		radius of micelle
+1.0		inverse of layer thickness
+5.0		value of Vo
+10.0		gam1 = D_solution/D_micelle
+1.0E+07	0.0E+00 0.0E+00 0.0E+00	value of kappa in the delta sink-term, (S, T0, T-, T+)
+0.0E-00		value of k_scav the scavenging parameter
+0.0		alpha in kappa(x) = alpha*exp(-beta*x)/(x^k_expo)
+0.3		beta in kappa(x) = alpha*exp(-beta*x)/(x^k_expo)
+1.0		k_expo in kappa(x) = alpha*exp(-beta*x)/(x^k_expo)
+25		number of discretisation points
+2.0		g1
+2.0		g2
+5.0		B02
+1.0E+7		j0*dd/D
+10.0		alpha_d
+0.0		fs
+0.0 0.0		sigma
+10		scanmode  ( 1,2,3,4,5,6,7,8,9,10,11,12 or 13 )
+0.0 0.0		scmin
+10.0 0.0	scmax
+0		sclog (0=linear, 1=logarithmic)
+2		# of points in [scmin..scmax]
+1.0		x0
+0		also_2n (0 or 1)
+3		no. of groups on radical 1
+2		no. of groups on radical 2
+1 1 1		2*spin   hyperfine constant   multiplicity
+1 3 1
+1 2 1
+1 4 1 
+1 5 1

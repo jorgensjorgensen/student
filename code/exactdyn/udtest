@@ -1,0 +1,19 @@
+% Num. calculation using the free diff. trans.
+%  50 discretisation points and xmax = 5.000000e+01
+% Result for x0 =   1.00 found directly, no interpolation used
+% Delta sink-term, Ks  = 1.000000e+07, Kt0 = 0.000000e+00,
+%                  Kt- = 0.000000e+00, Kt+ = 0.000000e+00
+% V(x) = 0
+% gamma(x) = 1
+% J0 =   1.000000e+06, alpha*d =   1.000000e+01
+% g1 =   2.000000e+00  g2 =   2.010000e+00
+% sigma = (0.000000e+00 0.000000e+00)   singlet character :   0.000
+%
+% radical  2*spin    hf-constant    multiplicity
+%    1        1      1.000000e+00         1
+%    2        1      2.000000e+00         1
+%
+%    B02         F (S)         F (T)
+
+5.000000e+00  6.682492e-02  0.000000e+00  -4.415766e-05  -1.872752e-03  -3.130183e-03  -1.250781e-02  1.352984e-02  -3.054109e-02
+1.000000e+01  5.992100e-02  0.000000e+00  1.459785e-04  -8.733490e-04  -1.950143e-03  -7.456287e-03  9.498658e-03  -2.046767e-02
