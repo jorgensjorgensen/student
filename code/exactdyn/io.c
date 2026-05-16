@@ -7,6 +7,13 @@
 
 static char line[BUFSIZ];
 
+void readline(FILE* input, char* variables) {
+  char* read = fgets (line, BUFSIZ, input);
+  if (read == NULL) {
+    printf ("Unable to read line for %s", variables);
+    exit (-1);
+  }
+}
 
 void read_input (FILE* input,
                  double** A_ret,
@@ -40,72 +47,72 @@ void read_input (FILE* input,
   int i;
   int_vector maxJ, no_of_ident;
   real_vector A;
-  int_vector no_of_groups; 
+  int_vector no_of_groups;
 
-  fgets (line, BUFSIZ, input);
+  readline(input, "kmode");
   sscanf (line, "%d", &kmode);
-  fgets (line, BUFSIZ, input);
+  readline (input, "transf");
   sscanf (line, "%d", &transf);
-  fgets (line, BUFSIZ, input);
+  readline (input, "pot");
   sscanf (line, "%d", &pot);
-  fgets (line, BUFSIZ, input);
+  readline (input, "def");
   sscanf (line, "%d", &dif);
-  fgets (line, BUFSIZ, input);
+  readline (input, "xc");
   sscanf (line, "%lf", &xc);
-  fgets (line, BUFSIZ, input);
+  readline (input, "x_DSL");
   sscanf (line, "%lf", &x_DSL);
-  fgets (line, BUFSIZ, input);
+  readline (input, "xmic");
   sscanf (line, "%lf", &xmic);
-  fgets (line, BUFSIZ, input);
+  readline (input, "inv_th");
   sscanf (line, "%lf", &inv_th);
-  fgets (line, BUFSIZ, input);
+  readline (input, "Vo");
   sscanf (line, "%lf", &Vo);
-  fgets (line, BUFSIZ, input);
+  readline (input, "DsDm");
   sscanf (line, "%lf", &DsDm);
-  fgets (line, BUFSIZ, input);
+  readline (input, "Ks, Kt_0, Kt_minus, Kt_plust");
   sscanf (line, "%lf%lf%lf%lf", &Ks, &Kt_0, &Kt_minus, &Kt_plus);
-  fgets (line, BUFSIZ, input);
+  readline (input, "scav");
   sscanf (line, "%lf", &scav);
-  fgets (line, BUFSIZ, input);
+  readline (input, "alpha");
   sscanf (line, "%lf", &alpha);
-  fgets (line, BUFSIZ, input);
+  readline (input, "beta");
   sscanf (line, "%lf", &beta);
-  fgets (line, BUFSIZ, input);
+  readline (input, "k_expo");
   sscanf (line, "%lf", &k_expo);
-  fgets (line, BUFSIZ, input);
+  readline (input, "N");
   sscanf (line, "%d", &N);
-  fgets (line, BUFSIZ, input);
+  readline (input, "g1");
   sscanf (line, "%lf", &g1);
-  fgets (line, BUFSIZ, input);
+  readline (input, "g2");
   sscanf (line, "%lf", &g2);
-  fgets (line, BUFSIZ, input);
+  readline (input, "B02");
   sscanf (line, "%lf", &B02);
-  fgets (line, BUFSIZ, input);
+  readline (input, "Jo");
   sscanf (line, "%lf", &Jo);
-  fgets (line, BUFSIZ, input);
+  readline (input, "alfad");
   sscanf (line, "%lf", &alfad);
-  fgets (line, BUFSIZ, input);
+  readline (input, "fs");
   sscanf (line, "%lf", &fs);
-  fgets (line, BUFSIZ, input);
+  readline (input, "sigma.re, sigma.im");
   sscanf (line, "%lf%lf", &sigma.re, &sigma.im);
-  fgets (line, BUFSIZ, input);
+  readline (input, "scanmode");
   sscanf (line, "%d", &scanmode);
-  fgets (line, BUFSIZ, input);
+  readline (input, "iscmin");
   sscanf (line, "%lf%lf", &scmin, &iscmin);
-  fgets (line, BUFSIZ, input);
+  readline (input, "iscmax");
   sscanf (line, "%lf%lf", &scmax, &iscmax);
-  fgets (line, BUFSIZ, input);
+  readline (input, "axistype");
   sscanf (line, "%d", &axistype);
-  fgets (line, BUFSIZ, input);
+  readline (input, "nsc");
   sscanf (line, "%d", &nsc);
-  fgets (line, BUFSIZ, input);
+  readline (input, "x0");
   sscanf (line, "%lf", &x0);
-  fgets (line, BUFSIZ, input);
+  readline (input, "also_2n");
   sscanf (line, "%d", &also_2n);
-  fgets (line, BUFSIZ, input);
+  readline (input, "no_of_groups[0]");
   alloc_vec (no_of_groups, 2, int);
   sscanf (line, "%d", &no_of_groups [0]);
-  fgets (line, BUFSIZ, input);
+  readline (input, "no_of_groups[1]");
   sscanf (line, "%d", &no_of_groups [1]);
   *no_of_spins = 2 + no_of_groups [0] + no_of_groups [1];
   alloc_vec (maxJ, *no_of_spins, int);
@@ -114,7 +121,7 @@ void read_input (FILE* input,
   maxJ [0] = 1; A [0] = g1 * B02 / ge;
   maxJ [1] = 1; A [1] = g2 * B02 / ge;
   for (i = 2; i < *no_of_spins; ++i) {
-    fgets (line, BUFSIZ, input);
+    readline (input, "maxJ [i], A [i], no_of_ident [i-2]");
     sscanf (line, "%d%lf%d", &maxJ [i], &A [i], &no_of_ident [i-2]);
     maxJ [i] *= no_of_ident [i-2];
   }
